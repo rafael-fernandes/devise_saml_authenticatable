@@ -16,7 +16,11 @@ module Devise
       end
 
       def authenticate!
+        debugger
+        
         parse_saml_response
+
+        debugger
         retrieve_resource unless self.halted?
         unless self.halted?
           @resource.after_saml_authentication(@response.sessionindex)
@@ -33,17 +37,23 @@ module Devise
 
       private
       def parse_saml_response
+        debugger
         @response = OneLogin::RubySaml::Response.new(
           params[:SAMLResponse],
           response_options,
         )
+
+        debugger
+        
         unless @response.is_valid?
           failed_auth("Auth errors: #{@response.errors.join(', ')}")
         end
       end
 
       def retrieve_resource
+        debugger
         @resource = mapping.to.authenticate_with_saml(@response, params[:RelayState])
+        debugger
         if @resource.nil?
           failed_auth("Resource could not be found")
         end
