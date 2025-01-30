@@ -7,6 +7,8 @@ module SamlAuthenticatable
     def initialize(saml_response, attribute_map)
       @attributes = ::SamlAuthenticatable::SamlMappedAttributes.new(saml_response.attributes, attribute_map)
       @raw_response = saml_response
+
+      debugger
     end
 
     def attribute_value_by_resource_key(key)
